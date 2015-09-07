@@ -1,0 +1,7 @@
+# PHP-Storm
+.idea
+
+# Composer
+vendor
+composer.lock
+
