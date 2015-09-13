@@ -18,6 +18,8 @@ class Login extends \Magento\Backend\App\Action
     protected $_frontendUrlBuilder;
 
     /**
+     * Construct
+     *
      * @param \Magento\Backend\App\Action\Context $context
      */
     public function __construct(
@@ -33,6 +35,8 @@ class Login extends \Magento\Backend\App\Action
 
 
     /**
+     * Is allowed
+     *
      * @return bool
      */
     protected function _isAllowed()
@@ -41,14 +45,18 @@ class Login extends \Magento\Backend\App\Action
     }
 
     /**
+     * Execute
+     *
      * @return \Magento\Framework\Controller\ResultInterface
      */
-    protected function execute()
+    public function execute()
     {
         /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
 
         $customerId = $this->getRequest()->getParam('id');
+
+        $this->_session->logout();
 
         if($customerId && $this->_session->loginById($customerId)) {
             $urlToCustomerAccount = $this->_frontendUrlBuilder->getUrl('customer/account/index');
