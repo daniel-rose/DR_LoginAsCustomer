@@ -1,7 +1,6 @@
 <?php
 namespace DR\LoginAsCustomer\Block\Adminhtml\Customer\Edit;
 
-
 class LoginAsCustomerButton extends \Magento\Customer\Block\Adminhtml\Edit\GenericButton implements \Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface
 {
     /**
@@ -20,8 +19,7 @@ class LoginAsCustomerButton extends \Magento\Customer\Block\Adminhtml\Edit\Gener
         \Magento\Backend\Block\Widget\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Customer\Api\AccountManagementInterface $customerAccountManagement
-    )
-    {
+    ) {
         parent::__construct($context, $registry);
         $this->customerAccountManagement = $customerAccountManagement;
     }
@@ -38,9 +36,9 @@ class LoginAsCustomerButton extends \Magento\Customer\Block\Adminhtml\Edit\Gener
         $data = [];
         if ($customerId && $canModify) {
             $data = [
-                'label'     => __('Login As Customer'),
-                'on_click'  => sprintf("location.href = '%s';", $this->getLoginAsCustomerUrl()),
-                'class'     => 'add',
+                'label' => __('Login As Customer'),
+                'on_click' => sprintf("location.href = '%s';", $this->getLoginAsCustomerUrl()),
+                'class' => 'add',
                 'sort_order' => 20,
             ];
         }

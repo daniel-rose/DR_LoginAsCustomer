@@ -4,11 +4,25 @@ namespace DR\LoginAsCustomer\Controller\Adminhtml\Index;
 class Login extends \Magento\Backend\App\Action
 {
     /**
+     * Admin session model
+     *
+     * @var \Magento\Backend\Model\Auth\Session $_adminSession
+     */
+    protected $_adminSession;
+
+    /**
      * Customer session model
      *
-     * @var \Magento\Customer\Model\Session $session
+     * @var \Magento\Customer\Model\Session $_session
      */
     protected $_session;
+
+    /**
+     * Logger model
+     *
+     * @var \Psr\Log\LoggerInterface $_logger
+     */
+    protected $_logger;
 
     /**
      * Frontend url builder
@@ -25,12 +39,15 @@ class Login extends \Magento\Backend\App\Action
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\UrlInterface $frontendUrlBuilder,
-        \Magento\Customer\Model\Session $session
-    )
-    {
+        \Magento\Customer\Model\Session $session,
+        \Magento\Backend\Model\Auth\Session $adminSession,
+        \Psr\Log\LoggerInterface $logger
+    ) {
         parent::__construct($context);
         $this->_frontendUrlBuilder = $frontendUrlBuilder;
+        $this->_adminSession = $adminSession;
         $this->_session = $session;
+        $this->_logger = $logger;
     }
 
 
@@ -41,7 +58,7 @@ class Login extends \Magento\Backend\App\Action
      */
     protected function _isAllowed()
     {
-        return $this->_authorization->isAllowed('DR_LoginAsCustomer::dashboard');
+        return $this->_authorization->isAllowed('DR_LoginAsCustomer::login');
     }
 
     /**
@@ -58,7 +75,12 @@ class Login extends \Magento\Backend\App\Action
 
         $this->_session->logout();
 
-        if($customerId && $this->_session->loginById($customerId)) {
+        if ($customerId && $this->_session->loginById($customerId)) {
+            if ($this->_adminSession->getUser() != null && $this->_adminSession->getUser()->getId()) {
+                $this->_logger->info(sprintf('%s logged in as %s.', $this->_adminSession->getUser()->getUserName(),
+                    $this->_session->getCustomer()->getName()));
+            }
+
             $urlToCustomerAccount = $this->_frontendUrlBuilder->getUrl('customer/account/index');
 
             $resultRedirect->setUrl($urlToCustomerAccount);

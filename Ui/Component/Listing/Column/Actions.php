@@ -1,15 +1,15 @@
 <?php
 namespace DR\LoginAsCustomer\Ui\Component\Listing\Column;
 
-
-class Actions extends \Magento\Customer\Ui\Component\Listing\Column\Actions {
+class Actions extends \Magento\Customer\Ui\Component\Listing\Column\Actions
+{
     /**
      * Prepare Data Source
      *
      * @param array $dataSource
-     * @return void
+     * @return array
      */
-    public function prepareDataSource(array &$dataSource)
+    public function prepareDataSource(array $dataSource)
     {
         if (isset($dataSource['data']['items'])) {
             $storeId = $this->context->getFilterParam('store_id');
@@ -34,6 +34,7 @@ class Actions extends \Magento\Customer\Ui\Component\Listing\Column\Actions {
                 ];
             }
         }
-    }
 
+        return $dataSource;
+    }
 }
