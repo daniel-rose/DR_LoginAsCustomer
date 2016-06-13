@@ -2,7 +2,7 @@
   "name": "dr/loginascustomer",
   "description": "Allows admin users to login as a specified customer.",
   "type": "magento2-module",
-  "license": "OSL-3.0",
+  "license": "MIT",
   "authors": [
     {
       "name": "Daniel Rose",
@@ -20,16 +20,14 @@
     }
   ],
   "require": {
-    "magento/module-customer": "*"
+    "magento/module-customer": "~100.0"
   },
   "require-dev": {
-    "squizlabs/php_codesniffer": "^2.3",
-    "phpmd/phpmd": "^2.2",
-    "sebastian/phpcpd": "^2.0",
-    "phpunit/phpunit": "^4.8"
+    "squizlabs/php_codesniffer": "~2.3",
+    "phpmd/phpmd": "~2.2",
+    "sebastian/phpcpd": "~2.0",
+    "phpunit/phpunit": "~4.8"
   },
-  "minimum-stability": "beta",
-  "prefer-stable": true,
   "autoload": {
     "files": [
       "registration.php"
